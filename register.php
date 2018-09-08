@@ -1,5 +1,6 @@
 <?php
 	// llamamos a las funciones controladoras
+	require_once 'requires.php';
 	require_once 'register-controller.php';
 
 	if ( isLogged() ) {
@@ -21,6 +22,12 @@
 		'uy' => 'Uruguay',
 		've' => 'Venezuela',
 	];
+
+	$form = new UserRegisterForm($_POST, $_FILES);
+	if (!$form->isValid()) {
+		print_r($form->getAllMessages());
+		exit;
+	}
 
 	// Persistencia de datos
 	// $userFullName = $_POST['userFullName'] ?? '';
@@ -71,7 +78,7 @@
 									type="text"
 									name="userFullName"
 									class="form-control <?= isset($errors['fullName']) ? 'is-invalid' : ''; ?>"
-									value="<?= $userFullName; ?>"
+									value="<?= $form->getFullName(); ?>"
 								>
 								<?php if (isset($errors['fullName'])): ?>
 									<div class="invalid-feedback">
@@ -87,7 +94,7 @@
 									type="text"
 									name="userEmail"
 									class="form-control <?= isset($errors['email']) ? 'is-invalid' : ''; ?>"
-									value="<?= $userEmail; ?>"
+									value="<?= $form->getEmail(); ?>"
 								>
 								<?php if (isset($errors['email'])): ?>
 									<div class="invalid-feedback">
@@ -136,7 +143,7 @@
 									<option value="">Elegí un país</option>
 									<?php foreach ($countries as $code => $country): ?>
 										<option
-											<?= $code == $userCountry ? 'selected' : '' ?>
+											<?= $code == $form->getCountry() ? 'selected' : '' ?>
 											value="<?= $code ?>"><?= $country ?></option>
 									<?php endforeach; ?>
 								</select>

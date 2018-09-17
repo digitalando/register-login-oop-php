@@ -8,8 +8,6 @@
 		exit;
 	}
 
-	$pageTitle = 'Register';
-	require_once 'includes/head.php';
 	$countries = [
 		'ar' => 'Argentina',
 		'bo' => 'Bolivia',
@@ -35,17 +33,21 @@
 			logIn($user);
 		}
 	}
+
+	$pageTitle = 'Register';
 ?>
+
+	<?php require_once 'includes/head.php'; ?>
 	<?php require_once 'includes/navbar.php'; ?>
 
 	<!-- Register-Form -->
 	<div class="container" style="margin-top:30px; margin-bottom: 30px;">
 		<div class="row justify-content-center">
 			<div class="col-md-10">
-				<?php if ( !$form->isValid() ): ?>
+				<?php if ( $_POST && $form->isValid() == false): ?>
 					<div class="alert alert-danger">
 						<ul>
-						<?php foreach ($form->getAllMessages() as $error): ?>
+						<?php foreach ($form->getAllErrors() as $error): ?>
 							<li> <?= $error ?> </li>
 						<?php endforeach; ?>
 						</ul>
@@ -61,12 +63,12 @@
 								<input
 									type="text"
 									name="userFullName"
-									class="form-control <?= isset($errors['fullName']) ? 'is-invalid' : ''; ?>"
+									class="form-control <?= $form->fieldHasError('fullName') ? 'is-invalid' : ''; ?>"
 									value="<?= $form->getFullName(); ?>"
 								>
-								<?php if (isset($errors['fullName'])): ?>
+								<?php if ($form->fieldHasError('fullName')): ?>
 									<div class="invalid-feedback">
-										<?= $errors['fullName'] ?>
+										<?= $form->getFieldError('fullName') ?>
 									</div>
 								<?php endif; ?>
 							</div>
@@ -77,12 +79,12 @@
 								<input
 									type="text"
 									name="userEmail"
-									class="form-control <?= isset($errors['email']) ? 'is-invalid' : ''; ?>"
+									class="form-control <?= $form->fieldHasError('email') ? 'is-invalid' : ''; ?>"
 									value="<?= $form->getEmail(); ?>"
 								>
-								<?php if ($form->fieldHasMessage('email')): ?>
+								<?php if ($form->fieldHasError('email')): ?>
 									<div class="invalid-feedback">
-										<?= $form->getFieldMessage('email') ?>
+										<?= $form->getFieldError('email') ?>
 									</div>
 								<?php endif; ?>
 							</div>
@@ -93,11 +95,11 @@
 								<input
 									type="password"
 									name="userPassword"
-									class="form-control <?= isset($errors['password']) ? 'is-invalid' : ''; ?>"
+									class="form-control <?= $form->fieldHasError('password') ? 'is-invalid' : ''; ?>"
 								>
-								<?php if (isset($errors['password'])): ?>
+								<?php if ($form->fieldHasError('password')): ?>
 									<div class="invalid-feedback">
-										<?= $errors['password'] ?>
+										<?= $form->getFieldError('password') ?>
 									</div>
 								<?php endif; ?>
 							</div>
@@ -108,11 +110,11 @@
 								<input
 									type="password"
 									name="userRePassword"
-									class="form-control <?= isset($errors['password']) ? 'is-invalid' : ''; ?>"
+									class="form-control <?= $form->fieldHasError('password') ? 'is-invalid' : ''; ?>"
 								>
-								<?php if (isset($errors['password'])): ?>
+								<?php if ($form->fieldHasError('password')): ?>
 									<div class="invalid-feedback">
-										<?= $errors['password'] ?>
+										<?= $form->getFieldError('password') ?>
 									</div>
 								<?php endif; ?>
 							</div>
@@ -122,7 +124,7 @@
 								<label><b>País de nacimiento:</b></label>
 								<select
 									name="userCountry"
-									class="form-control <?= isset($errors['country']) ? 'is-invalid' : ''; ?>"
+									class="form-control <?= $form->fieldHasError('country') ? 'is-invalid' : ''; ?>"
 								>
 									<option value="">Elegí un país</option>
 									<?php foreach ($countries as $code => $country): ?>
@@ -131,9 +133,9 @@
 											value="<?= $code ?>"><?= $country ?></option>
 									<?php endforeach; ?>
 								</select>
-								<?php if (isset($errors['country'])): ?>
+								<?php if ($form->fieldHasError('country')): ?>
 									<div class="invalid-feedback">
-										<?= $errors['country'] ?>
+										<?= $form->getFieldError('country') ?>
 									</div>
 								<?php endif; ?>
 							</div>
@@ -144,13 +146,13 @@
 								<div class="custom-file">
 									<input
 										type="file"
-										class="custom-file-input <?= isset($errors['image']) ? 'is-invalid' : ''; ?>"
+										class="custom-file-input <?= $form->fieldHasError('image') ? 'is-invalid' : ''; ?>"
 									 	name="userAvatar"
 									>
 									<label class="custom-file-label">Choose file...</label>
-									<?php if (isset($errors['image'])): ?>
+									<?php if ($form->fieldHasError('image')): ?>
 										<div class="invalid-feedback">
-											<?= $errors['image'] ?>
+											<?= $form->getFieldError('image') ?>
 										</div>
 									<?php endif; ?>
 								</div>

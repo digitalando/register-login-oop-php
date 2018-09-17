@@ -1,19 +1,54 @@
 <?php
 
 abstract class Form {
-    private $messages;
+    private $errors;
 
     public function __construct() {
-      $this->messages = [];
+      $this->errors = [];
     }
 
     public abstract function isValid();
 
-    public function getAllMessages() {
-      return $this->messages;
+    /**
+     * Returns form errors or an empty array otherwise
+     * 
+     * @return array 
+     */
+    public function getAllerrors() {
+      return $this->errors;
     }
 
-    public function addMessage($field, $message) {
-      $this->messages[$field] = $message;
+    /**
+     * Returns true if field has errors, false otherwise
+     * 
+     * @param string $field
+     *
+     * @return boolean 
+     */
+    public function fieldHasError($field) {
+      return isset($this->errors[$field]);
+    }
+
+    /**
+     * Returns the field error if it has one, false otherwise
+     *
+     * @param string $field
+     *
+     * @return array|false 
+     */
+    public function getFieldError($field) {
+      return $this->errors[$field] ?? false;
+    }
+
+    /**
+     * Adds an error to the error array
+     *
+     * @param string $field
+     * @param string $error
+     *
+     * @return array 
+     */
+    public function addError($field, $error) {
+      $this->errors[$field] = $error;
     }
 }

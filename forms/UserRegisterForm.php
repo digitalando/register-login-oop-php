@@ -27,7 +27,7 @@ class UserRegisterForm extends Form {
     $this->password = isset ($post['userPassword']) ? $post['userPassword'] : '';
     $this->passwordConfirm = isset ($post['userRePassword']) ? $post['userRePassword'] : '';
     $this->country = isset ($post['userCountry']) ? $post['userCountry'] : '';
-    $this->image = isset ($files['userAvatar']) ? $files['userAvatar'] : '';
+    $this->image = isset ($files['userAvatar']) ? $files['userAvatar'] : [];
   }
 
   public function isValid() {
@@ -55,12 +55,14 @@ class UserRegisterForm extends Form {
       $this->addMessage('country', 'Elegí un país');
     }
 
-    if ( $this->image['error'] !== UPLOAD_ERR_OK ) {
-      $this->addMessage('image', 'Ché subite una imagen');
-    } else {
-      $ext = pathinfo($this->image['name'], PATHINFO_EXTENSION);
-      if ( !in_array($ext, ALLOWED_IMAGE_TYPES) ) {
-        $this->addMessage('image', 'Formato de imagen no permitido');
+    if ( $this->image) {
+      if ( $this->image['error'] !== UPLOAD_ERR_OK ) {
+        $this->addMessage('image', 'Ché subite una imagen');
+      } else {
+        $ext = pathinfo($this->image['name'], PATHINFO_EXTENSION);
+        if ( !in_array($ext, ALLOWED_IMAGE_TYPES) ) {
+          $this->addMessage('image', 'Formato de imagen no permitido');
+        }
       }
     }
 

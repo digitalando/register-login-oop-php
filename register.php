@@ -24,24 +24,8 @@
 	];
 
 	$form = new UserRegisterForm($_POST, $_FILES);
-	if (!$form->isValid()) {
-		print_r($form->getAllMessages());
-		exit;
-	}
-
-	// Persistencia de datos
-	// $userFullName = $_POST['userFullName'] ?? '';
-	$userFullName = isset($_POST['userFullName']) ? trim($_POST['userFullName']) : '';
-	$userEmail = isset($_POST['userEmail']) ? trim($_POST['userEmail']) : '';
-	$userCountry = isset($_POST['userCountry']) ? trim($_POST['userCountry']) : '';
-
-	$errors = [];
-
 	if ($_POST) {
-		$errors = registerValidate($_POST, $_FILES);
-
-		if ( count($errors) == 0 ) {
-
+		if ($form->isValid()) {
 			$imageName = saveImage($_FILES['userAvatar']);
 
 			$_POST['avatar'] = $imageName;
@@ -58,10 +42,10 @@
 	<div class="container" style="margin-top:30px; margin-bottom: 30px;">
 		<div class="row justify-content-center">
 			<div class="col-md-10">
-				<?php if ( $errors ): ?>
+				<?php if ( !$form->isValid() ): ?>
 					<div class="alert alert-danger">
 						<ul>
-						<?php foreach ($errors as $error): ?>
+						<?php foreach ($form->getAllMessages() as $error): ?>
 							<li> <?= $error ?> </li>
 						<?php endforeach; ?>
 						</ul>
@@ -96,9 +80,9 @@
 									class="form-control <?= isset($errors['email']) ? 'is-invalid' : ''; ?>"
 									value="<?= $form->getEmail(); ?>"
 								>
-								<?php if (isset($errors['email'])): ?>
+								<?php if ($form->fieldHasMessage('email')): ?>
 									<div class="invalid-feedback">
-										<?= $errors['email'] ?>
+										<?= $form->getFieldMessage('email') ?>
 									</div>
 								<?php endif; ?>
 							</div>

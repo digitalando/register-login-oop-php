@@ -1,6 +1,16 @@
 <?php
 
+namespace AFS\Forms;
+
+/**
+ * Abstract form class
+ *
+ * This class provides shared methods for all forms that will extend it
+ */
 abstract class Form {
+    /**
+     * @var array $errors
+     */
     private $errors;
 
     public function __construct() {
@@ -11,8 +21,8 @@ abstract class Form {
 
     /**
      * Returns form errors or an empty array otherwise
-     * 
-     * @return array 
+     *
+     * @return array
      */
     public function getAllerrors() {
       return $this->errors;
@@ -20,10 +30,10 @@ abstract class Form {
 
     /**
      * Returns true if field has errors, false otherwise
-     * 
+     *
      * @param string $field
      *
-     * @return boolean 
+     * @return boolean
      */
     public function fieldHasError($field) {
       return isset($this->errors[$field]);
@@ -34,7 +44,7 @@ abstract class Form {
      *
      * @param string $field
      *
-     * @return array|false 
+     * @return array|false
      */
     public function getFieldError($field) {
       return $this->errors[$field] ?? false;
@@ -46,7 +56,7 @@ abstract class Form {
      * @param string $field
      * @param string $error
      *
-     * @return array 
+     * @return array
      */
     public function addError($field, $error) {
       $this->errors[$field] = $error;

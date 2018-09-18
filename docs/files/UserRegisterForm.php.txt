@@ -1,23 +1,42 @@
 <?php
 
+namespace AFS\Forms;
+
+/**
+ * User Register Form
+ *
+ * This class provides validation methods for the user register form
+ */
 class UserRegisterForm extends Form {
 
-  /* @var string */
+  /**
+   * @var string
+   */
   private $fullName;
 
-  /* @var string */
+  /**
+   * @var string
+   */
   private $email;
 
-  /* @var string */
+  /**
+   * @var string
+   */
   private $password;
 
-  /* @var string */
+  /**
+   * @var string
+   */
   private $passwordConfirm;
 
-  /* @var string */
+  /**
+   * @var string
+   */
   private $country;
 
-  /* @var string */
+  /**
+   * @var string
+   */
   private $image;
 
   public function __construct($post, $files) {

@@ -88,22 +88,37 @@ class UserRegisterForm extends Form {
     return empty($this->getAllErrors());
   }
 
+  /**
+   * @return string
+   */
   public function getFullName() {
     return $this->fullName;
   }
 
+  /**
+   * @return string
+   */
   public function getEmail() {
     return $this->email;
   }
 
+  /**
+   * @return string
+   */
   public function getPassword() {
     return $this->password;
   }
 
+  /**
+   * @return string
+   */
   public function getCountry() {
     return $this->country;
   }
 
+  /**
+   * @return array
+   */
   public function getImage() {
     return $this->image;
   }

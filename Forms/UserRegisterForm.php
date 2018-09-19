@@ -41,12 +41,12 @@ class UserRegisterForm extends Form {
 
   public function __construct($post, $files) {
     // Si el post llega vacío dejamos los campos vacíos
-    $this->fullName = isset ($post['userFullName']) ? $post['userFullName'] : '';
-    $this->email = isset ($post['userEmail']) ? $post['userEmail'] : '';
-    $this->password = isset ($post['userPassword']) ? $post['userPassword'] : '';
-    $this->passwordConfirm = isset ($post['userRePassword']) ? $post['userRePassword'] : '';
-    $this->country = isset ($post['userCountry']) ? $post['userCountry'] : '';
-    $this->image = isset ($files['userAvatar']) ? $files['userAvatar'] : [];
+    $this->fullName = isset ($post['fullName']) ? $post['fullName'] : '';
+    $this->email = isset ($post['email']) ? $post['email'] : '';
+    $this->password = isset ($post['password']) ? $post['password'] : '';
+    $this->passwordConfirm = isset ($post['rePassword']) ? $post['rePassword'] : '';
+    $this->country = isset ($post['country']) ? $post['country'] : '';
+    $this->image = isset ($files['avatar']) ? $files['avatar'] : [];
   }
 
   public function isValid() {

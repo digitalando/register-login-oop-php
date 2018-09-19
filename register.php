@@ -62,13 +62,13 @@
 								<label><b>Nombre completo:</b></label>
 								<input
 									type="text"
-									name="userFullName"
-									class="form-control <?= $form->fieldHasError('fullName') ? 'is-invalid' : ''; ?>"
-									value="<?= $form->getFullName(); ?>"
+									name="fullname"
+									class="form-control <?= $form->fieldHasError('fullname') ? 'is-invalid' : ''; ?>"
+									value="<?= $form->getfullname(); ?>"
 								>
-								<?php if ($form->fieldHasError('fullName')): ?>
+								<?php if ($form->fieldHasError('fullname')): ?>
 									<div class="invalid-feedback">
-										<?= $form->getFieldError('fullName') ?>
+										<?= $form->getFieldError('fullname') ?>
 									</div>
 								<?php endif; ?>
 							</div>
@@ -78,7 +78,7 @@
 								<label><b>Correo electrónico:</b></label>
 								<input
 									type="text"
-									name="userEmail"
+									name="email"
 									class="form-control <?= $form->fieldHasError('email') ? 'is-invalid' : ''; ?>"
 									value="<?= $form->getEmail(); ?>"
 								>
@@ -94,7 +94,7 @@
 								<label><b>Password:</b></label>
 								<input
 									type="password"
-									name="userPassword"
+									name="password"
 									class="form-control <?= $form->fieldHasError('password') ? 'is-invalid' : ''; ?>"
 								>
 								<?php if ($form->fieldHasError('password')): ?>
@@ -109,7 +109,7 @@
 								<label><b>Repetir Password:</b></label>
 								<input
 									type="password"
-									name="userRePassword"
+									name="rePassword"
 									class="form-control <?= $form->fieldHasError('password') ? 'is-invalid' : ''; ?>"
 								>
 								<?php if ($form->fieldHasError('password')): ?>
@@ -123,7 +123,7 @@
 							<div class="form-group">
 								<label><b>País de nacimiento:</b></label>
 								<select
-									name="userCountry"
+									name="country"
 									class="form-control <?= $form->fieldHasError('country') ? 'is-invalid' : ''; ?>"
 								>
 									<option value="">Elegí un país</option>
@@ -147,7 +147,7 @@
 									<input
 										type="file"
 										class="custom-file-input <?= $form->fieldHasError('image') ? 'is-invalid' : ''; ?>"
-									 	name="userAvatar"
+									 	name="avatar"
 									>
 									<label class="custom-file-label">Choose file...</label>
 									<?php if ($form->fieldHasError('image')): ?>

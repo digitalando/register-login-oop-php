@@ -14,5 +14,17 @@ require_once "config.php";
 require_once "Forms/Form.php";
 require_once "Forms/UserRegisterForm.php";
 
+use AFS\Repositories\Form;
+use AFS\Repositories\UserRegisterForm;
+
 /* Entities */
 require_once "Entities/User.php";
+
+use AFS\Entities\User;
+
+/* Repositories */
+require_once "Repositories/Repository.php";
+require_once "Repositories/UserRepository.php";
+
+use AFS\Repositories\Repository;
+use AFS\Repositories\UserRepository;

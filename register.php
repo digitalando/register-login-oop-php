@@ -42,7 +42,6 @@
 			$userRepo = new UserRepository();
 			$image = new File($_FILES['avatar']);
 			
-			
 			$user = new User(
 				$_POST['fullname'], 
 				$_POST['email'], 
@@ -53,7 +52,7 @@
 			$user->setImage($image->getFinalName());
 
 			$userRepo->save($user);
-			$imageRepo->save();
+			$image->save();
 
 
 			logIn($user);

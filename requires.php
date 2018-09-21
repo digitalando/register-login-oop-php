@@ -11,17 +11,17 @@
 require_once "config.php";
 
 /* Forms */
-require_once "Forms/Form.php";
-require_once "Forms/UserRegisterForm.php";
+require_once "Classes/Forms/Form.php";
+require_once "Classes/Forms/UserRegisterForm.php";
 
 /* Entities */
-require_once "Entities/User.php";
+require_once "Classes/Entities/User.php";
 
 /* Databases */
-require_once "Databases/Database.php";
-require_once "Databases/JsonDatabase.php";
+require_once "Classes/Databases/Database.php";
+require_once "Classes/Databases/JsonDatabase.php";
 
 /* Repositories */
-require_once "Repositories/File.php";
-require_once "Repositories/Repository.php";
-require_once "Repositories/UserRepository.php";
+require_once "Classes/Repositories/File.php";
+require_once "Classes/Repositories/Repository.php";
+require_once "Classes/Repositories/UserRepository.php";

@@ -9,7 +9,7 @@ namespace AFS\Databases;
  */
 class JsonDatabase implements Database
 {
-    const JSON_DIR = __DIR__ . '/../data/json/';
+    const JSON_DIR = __DIR__ . '/../../data/json/';
 
     /**
      * @var string Nombre del archivo JSON

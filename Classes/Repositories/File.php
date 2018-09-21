@@ -49,7 +49,7 @@ class File
 	 */
 	public function __construct($file) {
 		$this->prefix = 'user_img_';
-		$this->directory = dirname(__FILE__) . "/../data/avatars/";
+		$this->directory = dirname(__FILE__) . "/../../data/avatars/";
 
 		$this->originalName = $file['name'];
 		$this->temporalName = $file['tmp_name'];
@@ -72,7 +72,7 @@ class File
 	{
 		$finalPath = $this->directory . $this->finalName;
 
-		move_uploaded_file($this->originalName, $finalPath);
+		move_uploaded_file($this->temporalName, $finalPath);
 	}
 
 	/**

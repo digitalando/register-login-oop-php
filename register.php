@@ -3,6 +3,18 @@
 	require_once 'requires.php';
 	require_once 'register-controller.php';
 
+	use AFS\Forms\Form;
+	use AFS\Forms\UserRegisterForm;
+
+	use AFS\Entities\User;
+
+	use AFS\Repositories\File;
+	use AFS\Repositories\Repository;
+	use AFS\Repositories\UserRepository;
+
+	use AFS\Databases\Database;
+	use AFS\Databases\JsonDatabase;
+
 	if ( isLogged() ) {
 		header('location: profile.php');
 		exit;
@@ -22,13 +34,27 @@
 	];
 
 	$form = new UserRegisterForm($_POST, $_FILES);
-	if ($_POST) {
-		if ($form->isValid()) {
-			$imageName = saveImage($_FILES['userAvatar']);
+	if ($_POST) 
+	{
+		if ($form->isValid()) 
+		{
 
-			$_POST['avatar'] = $imageName;
+			$userRepo = new UserRepository();
+			$image = new File($_FILES['avatar']);
+			
+			
+			$user = new User(
+				$_POST['fullname'], 
+				$_POST['email'], 
+				$_POST['password'], 
+				$_POST['country']
+			);
 
-			$user = saveUser($_POST);
+			$user->setImage($image->getFinalName());
+
+			$userRepo->save($user);
+			$imageRepo->save();
+
 
 			logIn($user);
 		}
@@ -64,7 +90,7 @@
 									type="text"
 									name="fullname"
 									class="form-control <?= $form->fieldHasError('fullname') ? 'is-invalid' : ''; ?>"
-									value="<?= $form->getfullname(); ?>"
+									value="<?= $form->getFullname(); ?>"
 								>
 								<?php if ($form->fieldHasError('fullname')): ?>
 									<div class="invalid-feedback">

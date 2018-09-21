@@ -200,8 +200,8 @@
 
 	// function logear al usuario
 	function logIn($user) {
-		unset($user['id']);
-		unset($user['password']);
+		//unset($user['id']);
+		//unset($user['password']);
 		$_SESSION['user'] = $user;
 		header('location: profile.php');
 		exit;

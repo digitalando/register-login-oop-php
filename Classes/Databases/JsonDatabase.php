@@ -9,6 +9,9 @@ namespace AFS\Databases;
  */
 class JsonDatabase implements Database
 {
+    /**
+     * @todo Esto debería ser configurable
+     */
     const JSON_DIR = __DIR__ . '/../../data/json/';
 
     /**
@@ -17,7 +20,7 @@ class JsonDatabase implements Database
     private $file;
 
     /**
-     * @var string
+     * @var string Nombre de la tabla
      */
     private $table;
 
@@ -80,12 +83,48 @@ class JsonDatabase implements Database
      *
      * @param array $data
      */
-    public function insert(array $row) 
+    public function insert(array $data) 
     {
         $rows = $this->fetchAll();
-        $rows[] = $row;
+        $rows[] = $data;
         
         $this->write($rows);
+    }
+
+    /**
+     * Modifica un registro exitente en la tabla.
+     *
+     * El método solo modificará los registros en función de la llave primaria.
+     *
+     * @param array $data
+     */
+    public function update(array $data) 
+    {
+        $rows = $this->fetchAll();
+
+        foreach ($rows as $key => $row) {
+            if ($row[$this->primaryKey] == $data[$this->primaryKey])
+            {
+                $rows[$key] = $data;
+            }
+        }
+        
+        $this->write($rows);
+    }
+
+    public function fetch(array $condition) {
+        $rows = $this->fetchAll();
+
+        foreach ($rows as $row) {
+            foreach ($condition as $field => $value) {
+                if ($row[$field] == $value)
+                {
+                    return $row;
+                }
+            }
+        }
+        
+        return false;
     }
 
     /**
@@ -104,7 +143,7 @@ class JsonDatabase implements Database
     public function autoincrement() 
     {
         $nextId = 1;
-        
+
         $rows = $this->fetchAll();
 
         if (count($rows))
@@ -112,7 +151,7 @@ class JsonDatabase implements Database
             $lastRow = array_pop($rows);
             $nextId = $lastRow[$this->primaryKey] + 1;
         }
-        
+
         return $nextId;
     }
 }

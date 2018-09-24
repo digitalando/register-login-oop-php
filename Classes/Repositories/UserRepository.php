@@ -9,10 +9,6 @@ class UserRepository extends Repository
 {
     protected $table = 'users';
 
-    public function __construct() {
-        parent::__construct($this->table);
-    }
-
     /**
     * Convierte una registro de la base de datos a una entidad.
     *

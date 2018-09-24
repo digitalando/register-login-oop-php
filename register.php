@@ -9,6 +9,7 @@
 	use AFS\Entities\User;
 
 	use AFS\Repositories\File;
+	use AFS\Repositories\UserImageFile;
 	use AFS\Repositories\Repository;
 	use AFS\Repositories\UserRepository;
 
@@ -36,26 +37,35 @@
 	$form = new UserRegisterForm($_POST, $_FILES);
 	if ($_POST) 
 	{
+		// Verificamos que el formulario sea válido
 		if ($form->isValid()) 
 		{
-
+			// Verificamos que el email no exista en base
 			$userRepo = new UserRepository();
-			$image = new File($_FILES['avatar']);
-			
-			$user = new User(
-				$_POST['fullname'], 
-				$_POST['email'], 
-				$_POST['password'], 
-				$_POST['country']
-			);
+			if ($userRepo->emailExists($form->getEmail()) == false) 
+			{
+				// Si todo fue bien, guardamos el usuario en base
+				$image = new UserImageFile($_FILES['avatar']);
+				
+				$user = new User(
+					$_POST['fullname'], 
+					$_POST['email'], 
+					$_POST['password'], 
+					$_POST['country']
+				);
 
-			$user->setImage($image->getFinalName());
+				$user->setImage($image->getFinalName());
 
-			$userRepo->save($user);
-			$image->save();
+				$userRepo->save($user);
+				$image->save();
 
-
-			logIn($user);
+				// Una vez guardado en base lo logeamos
+				logIn($user);
+			}
+			else
+			{
+				$form->addError('email', 'El email ingresado ya se encuentra registrado');
+			}
 		}
 	}
 

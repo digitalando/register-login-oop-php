@@ -23,5 +23,7 @@ require_once "Classes/Databases/JsonDatabase.php";
 
 /* Repositories */
 require_once "Classes/Repositories/File.php";
+require_once "Classes/Repositories/UserImageFile.php";
+
 require_once "Classes/Repositories/Repository.php";
 require_once "Classes/Repositories/UserRepository.php";

@@ -39,6 +39,10 @@ class UserRegisterForm extends Form
      */
     private $image;
 
+    /**
+     * @param array $post
+     * @param array $files
+     */
     public function __construct($post, $files)
     {
       // Si el post llega vacío dejamos los campos vacíos
@@ -50,6 +54,11 @@ class UserRegisterForm extends Form
       $this->image = isset ($files['avatar']) ? $files['avatar'] : [];
     }
 
+    /**
+     * Retorna el estado de validación del formulario. 
+     * 
+     * @return boolean
+     */
     public function isValid()
     {
       if (empty($this->fullname) )

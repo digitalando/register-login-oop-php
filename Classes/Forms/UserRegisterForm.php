@@ -5,7 +5,7 @@ namespace AFS\Forms;
 /**
  * User Register Form
  *
- * This class provides validation methods for the user register form
+ * Provee los métodos de validación para el formulario de registro de usuarios.
  */
 class UserRegisterForm extends Form
 {

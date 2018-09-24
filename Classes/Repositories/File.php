@@ -2,44 +2,42 @@
 
 namespace AFS\Repositories;
 
-use AFS\Config;
-
 /**
  * Repositiorio de archivos
  *
  * Provee utilizades para el manejo de archivos
  */
-class File 
+abstract class File 
 {
 	/**
 	 * @var string Nombre original del archivo
 	 */
-	private $originalName;
+	protected $originalName;
 
 	/**
 	 * @var string Nombre temporal en el servidor
 	 */
-	private $temporalName;
+	protected $temporalName;
 
 	/**
 	 * @var string Nombre temporal en el servidor
 	 */
-	private $finalName;
+	protected $finalName;
 
 	/**
 	 * @var string Extension del archivo
 	 */
-	private $extension;
+	protected $extension;
 
 	/**
 	 * @var string Prefijo del archivo usado para generar el nombre
 	 */
-	private $prefix;
+	protected $prefix;
 
 	/**
 	 * @var string Prefijo del archivo usado para generar el nombre
 	 */
-	private $directory;
+	protected $directory;
 
 
 	/**
@@ -48,9 +46,6 @@ class File
 	 * @todo $prefix y $directory deberian cambiar segun el tipo de archivo.
 	 */
 	public function __construct($file) {
-		$this->prefix = 'user_img_';
-		$this->directory = dirname(__FILE__) . "/../../data/avatars/";
-
 		$this->originalName = $file['name'];
 		$this->temporalName = $file['tmp_name'];
 		$this->extension = pathinfo($this->originalName, PATHINFO_EXTENSION);

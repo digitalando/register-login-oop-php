@@ -1,13 +1,9 @@
 <?php
-	require_once 'register-controller.php';
-
-	if ( isLogged() ) {
-		$theUser = getUserByEmail($_SESSION['user']['email']);
-	}
+	require_once 'requires.php';
 
 	$pageTitle = 'Home';
-	require_once 'includes/head.php';
 ?>
+	<?php require_once 'includes/head.php'; ?>
 	<?php require_once 'includes/navbar.php'; ?>
 
 	<!-- Main-banner -->

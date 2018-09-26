@@ -1,44 +1,65 @@
 <?php
 	// llamamos a las funciones controladoras
-	require_once 'register-controller.php';
+	// require_once 'register-controller.php';
+	
+	require_once 'requires.php';
 
-	if ( isLogged() ) {
+	use AFS\Forms\Form;
+	use AFS\Forms\UserLoginForm;
+
+	use AFS\Entities\User;
+	use AFS\Entities\Auth;
+
+	use AFS\Repositories\Repository;
+	use AFS\Repositories\UserRepository;
+
+	use AFS\Databases\Database;
+	use AFS\Databases\JsonDatabase;
+
+	if ( $auth->isLoggedIn() ) {
 		header('location: profile.php');
 		exit;
 	}
 
-	$pageTitle = 'Login';
-	require_once 'includes/head.php';
+	$form = new UserLoginForm($_POST);
+	if ($_POST) 
+	{
+		// Verificamos que el formulario sea válido
+		if ($form->isValid()) 
+		{
+			// Verificamos que el usuario exista en base
+			$userRepo = new UserRepository();
+			$user = $userRepo->fetchByField('email', $form->getEmail());
 
-	// Persistencia de datos
-	$userEmail = isset($_POST['userEmail']) ? trim($_POST['userEmail']) : '';
-
-	$errors = [];
-
-	if ($_POST) {
-		$errors = loginValidate($_POST);
-
-		if ( count($errors) == 0) {
-			$user = getUserByEmail($_POST['userEmail']);
-
-			if( isset($_POST['rememberUser']) ) {
-				setcookie('userLogged', $_POST['userEmail'], time() + 3600);
+			// Verificamos que el password sea correcto
+			if ($user && $user->verifyPassword($form->getPassword())) 
+			{
+				// Logeamos al usuario
+				$auth->login($user, $form->getRememberMe());
+				header('location: profile.php');
 			}
-
-			logIn($user);
+			else
+			{
+				$form->addError('email', 'El usuario o la contraseña son incorrectos');
+			}
 		}
 	}
+
+
+
+	$pageTitle = 'Login';
 ?>
+	<?php require_once 'includes/head.php'; ?>
 	<?php require_once 'includes/navbar.php'; ?>
 
 	<!-- Register-Form -->
 	<div class="container" style="margin-top:30px; margin-bottom: 30px;">
 		<div class="row justify-content-center">
 			<div class="col-md-10">
-				<?php if ( $errors ): ?>
+				<?php if ( $_POST && $form->isValid() == false): ?>
 					<div class="alert alert-danger">
 						<ul>
-						<?php foreach ($errors as $error): ?>
+						<?php foreach ($form->getAllErrors() as $error): ?>
 							<li> <?= $error ?> </li>
 						<?php endforeach; ?>
 						</ul>
@@ -53,13 +74,13 @@
 								<label><b>Correo electrónico:</b></label>
 								<input
 									type="text"
-									name="userEmail"
-									class="form-control <?= isset($errors['email']) ? 'is-invalid' : ''; ?>"
-									value="<?= $userEmail; ?>"
+									name="email"
+									class="form-control <?= $form->fieldHasError('email') ? 'is-invalid' : ''; ?>"
+									value="<?= $form->getEmail(); ?>"
 								>
-								<?php if (isset($errors['email'])): ?>
+								<?php if ($form->fieldHasError('email')): ?>
 									<div class="invalid-feedback">
-										<?= $errors['email'] ?>
+										<?= $form->getFieldError('email') ?>
 									</div>
 								<?php endif; ?>
 							</div>
@@ -69,12 +90,12 @@
 								<label><b>Password:</b></label>
 								<input
 									type="password"
-									name="userPassword"
-									class="form-control <?= isset($errors['password']) ? 'is-invalid' : ''; ?>"
+									name="password"
+									class="form-control <?= $form->fieldHasError('password') ? 'is-invalid' : ''; ?>"
 								>
-								<?php if (isset($errors['password'])): ?>
+								<?php if ($form->fieldHasError('password')): ?>
 									<div class="invalid-feedback">
-										<?= $errors['password'] ?>
+										<?= $form->getFieldError('password') ?>
 									</div>
 								<?php endif; ?>
 							</div>

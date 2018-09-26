@@ -28,11 +28,9 @@ abstract class Repository {
      * @param sting $table Nombre de la tabla
      */
     
-    public function __construct(string $table)
+    public function __construct()
     {
-        $this->table = $table;
-
-        $this->database = new JsonDatabase($table);
+        $this->database = new JsonDatabase($this->table);
         $this->database->connect();
     }
 

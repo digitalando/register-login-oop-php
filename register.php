@@ -1,7 +1,5 @@
 <?php
-	// llamamos a las funciones controladoras
 	require_once 'requires.php';
-	require_once 'register-controller.php';
 
 	use AFS\Forms\Form;
 	use AFS\Forms\UserRegisterForm;
@@ -16,10 +14,8 @@
 	use AFS\Databases\Database;
 	use AFS\Databases\JsonDatabase;
 
-	if ( isLogged() ) {
-		header('location: profile.php');
-		exit;
-	}
+
+	$auth->isLoggedIn() && $auth->redirect();
 
 	$countries = [
 		'ar' => 'Argentina',
@@ -60,7 +56,7 @@
 				$image->save();
 
 				// Una vez guardado en base lo logeamos
-				logIn($user);
+				$auth->login($user)->redirect();
 			}
 			else
 			{

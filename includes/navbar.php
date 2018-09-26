@@ -21,10 +21,10 @@
 			</li>
 		</ul>
 		<ul class="navbar-nav ml-auto">
-			<?php if ( isLogged() ) : ?>
+			<?php if ( $auth->isLoggedIn() ) : ?>
 				<li class="nav-item">
 					<a class="nav-link active" href="profile.php">
-						<img src="data/avatars/<?= $theUser['avatar'] ?>" width="40" style="border-radius: 50%;"> <?= $theUser['name'] ?>
+						<img src="data/avatars/<?= $auth->getUser()->getImage(); ?>" width="40" style="border-radius: 50%;"> <?= $auth->getUser()->getFullname(); ?>
 					</a>
 				</li>
 				<li class="nav-item">

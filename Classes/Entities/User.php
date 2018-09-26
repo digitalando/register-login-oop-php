@@ -93,10 +93,20 @@ class User
         /* Si el password ya fue hasheado lo guardamos como está */
         if ($this->passwordIsHashed($password) == false)
         {
-            $password = password_hash($password, PASSWORD_DEFAULT);
+            $password = $this->hashPassword($password);
         }
 
         $this->password = $password;
+    }
+
+    /**
+     * Hashea el password para guardarlo de manera segura
+     * @param  string $password Password en texto plano.
+     * @return string           Password hasheado.
+     */
+    private function hashPassword($password)
+    {
+        return password_hash($password, PASSWORD_DEFAULT);
     }
 
     /**
@@ -113,6 +123,16 @@ class User
         $info = password_get_info($password);
         
         return $info['algo'] != 0;
+    }
+
+    /**
+     * Verifica si el password enviado coincide con el del usuario.
+     * @param  string $password Password en texto plano.
+     * @return boolean           
+     */
+    public function verifyPassword($password)
+    {
+        return password_verify($password, $this->password);
     }
 
     /**
@@ -146,7 +166,7 @@ class User
     /**
      * @return string
      */
-    public function getfullname()
+    public function getFullname()
     {
         return $this->fullname;
     }

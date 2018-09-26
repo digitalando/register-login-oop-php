@@ -1,7 +1,4 @@
 <?php
-	session_start();
-	session_destroy();
-	setcookie('userLogged', '', time() - 100);
+	require_once 'requires.php';
 
-	header('location: index.php');
-	exit;
+	$auth->logout()->redirect();

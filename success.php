@@ -1,13 +1,12 @@
 <?php
-	// llamamos a las funciones controladoras
-	require_once 'register-controller.php';
+	require_once 'requires.php';
 
 	$pageTitle = 'Register Success';
-	require_once 'includes/head.php';
 
 	$myUsers = getAllUsers();
 	// myDebug($myUsers);
 ?>
+	<?php require_once 'includes/head.php' ?>
 	<?php require_once 'includes/navbar.php' ?>
 
 	<div class="container">

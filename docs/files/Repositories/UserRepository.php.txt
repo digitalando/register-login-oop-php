@@ -2,6 +2,8 @@
 
 namespace AFS\Repositories;
 
+use AFS\Entities\User;
+
 /**
  *  Clase repositorio de usuarios.
  */
@@ -55,7 +57,8 @@ class UserRepository extends Repository
      * @return User
      */
     public function fetchByField(string $field, string $value) {
-        if ($this->database->fetch([$field => $value])) {
+        $row = $this->database->fetch([$field => $value]);
+        if ($row) {
             return $this->rowToEntity($row);
         }
         else {

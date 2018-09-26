@@ -9,6 +9,8 @@ namespace AFS\Forms;
  */
 class UserRegisterForm extends Form
 {
+    const ALLOWED_IMAGE_TYPES = ['jpg', 'png', 'jpeg', 'gif', 'svg'];
+
     /**
      * @var string
      */
@@ -104,7 +106,7 @@ class UserRegisterForm extends Form
             else
             {
                 $ext = pathinfo($this->image['name'], PATHINFO_EXTENSION);
-                if ( !in_array($ext, ALLOWED_IMAGE_TYPES) )
+                if ( !in_array($ext, self::ALLOWED_IMAGE_TYPES) )
                 {
                     $this->addError('image', 'Formato de imagen no permitido');
                 }

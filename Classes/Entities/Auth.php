@@ -56,7 +56,7 @@ class Auth
 	 * $auth->login()->redirect();
 	 * 
 	 * @param  User   $user     
-	 * @param  bool   $remember ]
+	 * @param  bool   $remember
 	 * @return Auth           
 	 */
 	public function login(User $user, bool $remember = false)
@@ -72,8 +72,6 @@ class Auth
 
 	/**
 	 * Logea automáticamente al usuario si existe la cookie.
-	 * 
-	 * @return [type] [description]
 	 */
 	public function autoLogin()
 	{

@@ -3,9 +3,9 @@
 namespace AFS\Forms;
 
 /**
- * Abstract form class
+ * Clase abstracta de formularios.
  *
- * This class provides shared methods for all forms that will extend it
+ * Provee los métodos de validación para todas las clases que extiendan de ésta.
  */
 abstract class Form {
     /**
@@ -20,7 +20,7 @@ abstract class Form {
     public abstract function isValid();
 
     /**
-     * Returns form errors or an empty array otherwise
+     * Retorna un array con los errores del formulario.
      *
      * @return array
      */
@@ -29,7 +29,7 @@ abstract class Form {
     }
 
     /**
-     * Returns true if field has errors, false otherwise
+     * Retorna verdadero si el campo tiene error, falso de lo contrario.
      *
      * @param string $field
      *
@@ -40,7 +40,7 @@ abstract class Form {
     }
 
     /**
-     * Returns the field error if it has one, false otherwise
+     * Retorna el error si el campo tiene error, falso de lo contrario.
      *
      * @param string $field
      *
@@ -51,7 +51,7 @@ abstract class Form {
     }
 
     /**
-     * Adds an error to the error array
+     * Agrega un error al array de errores.
      *
      * @param string $field
      * @param string $error

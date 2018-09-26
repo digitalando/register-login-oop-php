@@ -1,0 +1,6 @@
+# Ignorar todos los archivos del directorio
+*
+
+# A excepción de estos
+!.gitignore
+!default.png

@@ -57,8 +57,9 @@ class UserRegisterForm extends Form
     }
 
     /**
-     * Valida el formulario de registro
-     * @return boolean Verdadero en caso de que no haya errores, falso de lo contrario
+     * Retorna el estado de validación del formulario. 
+     * 
+     * @return boolean
      */
     public function isValid()
     {
@@ -70,12 +71,11 @@ class UserRegisterForm extends Form
         if (empty($this->email) )
         {
                 $this->addError('email', 'Escribí tu correo electrónico');
-        } else if ( !filter_var($this->email, FILTER_VALIDATE_EMAIL) )
+        } 
+        else if ( !filter_var($this->email, FILTER_VALIDATE_EMAIL) )
         {
                 $this->addError('email', 'Escribí un correo válido');
-        } //else if ( emailExist($email) ) {
-                //$this->addError('email', 'Ese email ya fue registrado');
-        //}
+        }
 
         if (empty($this->password) || empty($this->passwordConfirm) )
         {
@@ -97,18 +97,18 @@ class UserRegisterForm extends Form
 
         if ($this->image)
         {
-                if ( $this->image['error'] !== UPLOAD_ERR_OK )
+            if ( $this->image['error'] !== UPLOAD_ERR_OK )
+            {
+                $this->addError('image', 'Ché subite una imagen');
+            } 
+            else
+            {
+                $ext = pathinfo($this->image['name'], PATHINFO_EXTENSION);
+                if ( !in_array($ext, ALLOWED_IMAGE_TYPES) )
                 {
-                    $this->addError('image', 'Ché subite una imagen');
-                } 
-                else
-                {
-                    $ext = pathinfo($this->image['name'], PATHINFO_EXTENSION);
-                    if ( !in_array($ext, ALLOWED_IMAGE_TYPES) )
-                    {
-                        $this->addError('image', 'Formato de imagen no permitido');
-                    }
+                    $this->addError('image', 'Formato de imagen no permitido');
                 }
+            }
         }
 
         return empty($this->getAllErrors());
